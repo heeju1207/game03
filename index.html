@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게임</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,900&display=swap&subset=korean" rel="stylesheet">
+
+    <style type="text/css">
+        html{font-family: 'Noto Sans KR', sans-serif;}
+        body{margin: 0;background-color: #f7efdc;}
+        .wrap{position: relative; width: 600px; padding: 20px; margin: auto; padding-top: 100px;}
+        #hide0{margin-bottom: 150px;}
+        #hide4{margin-top: 70px;}
+        #f1{position: absolute; display:none;}
+        #f2{position: absolute; display:none;}
+        #end{position: absolute; display:none;}
+        #story{position: absolute;}
+        /* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 17.5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 20px;
+  width: 200px;
+  left: -80px;
+  z-index: 9999;
+  background: red;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #f8cb84;}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #e59829;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #c05b1c;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    background: white;
+}
+.container p{}
+        #bt {background-color: #e59829; border: none; color: white; padding: 9px 13px;  text-align: center;  font-size: 16px;  cursor: pointer;}
+
+        #bt:hover {background-color: #c05b1c;}
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+            <div id="hide0">
+                <p id="story"></p>
+                <p id="f1">다음에도 꼭 와주세유</p>
+                <p id="f2">나도 아무 생가기 없으어</p>
+            </div>
+
+                <div id="hide1" class="container">
+                    <input type="radio" name="radio" id="Button1" class="Button">
+                    <span class="checkmark"></span>
+                    <p id="choice1">시작할래!</p>
+                </div>
+
+                <div id="hide2" class="container">
+                    <input type="radio"  name="radio" id="Button2" class="Button">
+                    <span class="checkmark"></span>
+                    <p id="choice2">다음에 할래</p>
+                </div>
+
+                <div id="hide3" class="container">
+                     <input type="radio" name="radio" id="Button3" class="Button">
+                     <span class="checkmark"></span>
+                     <p id="choice3">아무생각없음</p>
+                </div>
+
+            <div id="hide4">
+                <button type="button" id="bt" onclick="myFunction()">선택</button>
+            </div>
+    </div>
+
+<script type="text/javascript">
+    
+var Choix = 
+    ["0. 당신은 과제에 파묻혀 있는 평범한 디자인과 학생입니다. 당신의 목표는 주인공인 당신을 무사히 밤이 되기 전까지 재우지 않고 일상생활을 헤쳐나가는 것입니다. 당신의 이름은 김용사! 과연 김용사는 자정이 되기 전까지 잠들지 아니할 수 있을 것 인가!",
+
+    "1. 오늘의 날씨는?",   
+
+    "2. 아침이 되었다. 오늘은 날씨가 맑다! 따뜻한 하루가 될거 같아! 용사는 기분이 좋아졌다. 이제 용사는 아침밥을 먹을것 인가?",   
+    "3. 아침이 되었다. 오늘은 날씨가 흐리군. 그냥그래. 이제 용사는 아침밥을 먹을것 인가?",
+    "4. 아침이 되었다. 오늘은 비가 온다! 추울것 같다. 이럴땐 롱패딩으로 따숩게 입어야 한다. 이제 용사는 아침밥을 먹을것 인가?",
+
+    "5. 오늘의 수업 교수님은 누굴까?",  
+    "6. 오늘의 수업 교수님은 누굴까?", 
+    "7. 오늘의 수업 교수님은 누굴까?", 
+    "8. 오늘의 수업 교수님은 누굴까?",
+    "9. 오늘의 수업 교수님은 누굴까?",
+    "10. 오늘의 수업 교수님은 누굴까?",
+
+     "11. 아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "12. 아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "13. 아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",
+     "14. 아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "15. 아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "16. 아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",
+     "17아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "18아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "19아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",
+     "20아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "21아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "22아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",          
+     "23아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "24아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "25아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",
+     "26아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "27아침 수업은 어떡하든 졸린 법이다. 그렇지만 용사는 이겨냈다! 시간이 흘러 쉬는 시간이 되었다. 친구가 편의점에 갔다오자 한다. 용사는 갈 것인가?",
+     "28아침 수업은 어떡하든 졸린 법이다. 그래서 용사는 자버렸다. 안타깝게도 교수님의 아름다운 목소리를 자장가 삼아 졸고 말았다.",
+               
+   "29용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+   "30용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+   "31용사는 편의점에 가지 않았다. 과실에 잠시 쉬러 들어갔지만 맑은 날씨의 따뜻한 온기와 푹신한 소파에 잠식당해 잠이 들고 말았다.",
+     "32용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "33용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "34용사는 편의점에 가지 않았다. 과실에 잠시 쉬러 들어갔지만 맑은 날씨의 따뜻한 온기와 푹신한 소파에 잠식당해 잠이 들고 말았다.",
+
+     "35용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "36용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "37용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?", 
+     "38용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "39용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "40용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",    
+
+     "41용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "42용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "43용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",  
+     "44용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "45용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "46용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",     
+
+     "47용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "48용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "49용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",              
+     "50용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "51용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "52용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",  
+
+     "53용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "54용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "55용사는 편의점에 가지 않았다. 과실에 잠시 쉬러 들어갔지만 추워진 날씨에 너무 따뜻하게 입고 나와 나른한 상태에서 푹신한 소파에 잠식당해 잠이 들고 말았다.",  
+     "56용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "57용사는 편의점에 가지 않았다. 수업시간이 끝났다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "58용사는 편의점에 가지 않았다. 과실에 잠시 쉬러 들어갔지만 추워진 날씨에 너무 따뜻하게 입고 나와 나른한 상태에서 푹신한 소파에 잠식당해 잠이 들고 말았다.",    
+
+     "59용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "60용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "61용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",   
+     "62용사는 편의점에 가는김에 커피를 획득했다. 커피의 힘으로 수업시간을 버티고 드디어 수업이 끝났다! 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+     "63용사는 편의점에 가지 않았다. 아침도 먹지 못했는데... 편의점에 갈껄.. 후회하면서 배고픔에 쓰러져 잠이 들고 말았다.",
+     "64용사는 편의점에 가지 않았다. 과실에 쉬러 들어가 친구들과 수다를 떨었다. 점심시간이 되었다. 용사는 점심을 어떻게 먹을것 인가?",
+
+     "65정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "66과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+     "67맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "68정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "69과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "70맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "71정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "72과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+     "73맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "74정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "75과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "76맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "77정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "78과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "79맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "80정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "81과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "82맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "83정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "84과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "85맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "86정문에 있는 맛집에 가게 되었다. 너무 맛있어서 즐겁게 다녀왔다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "87과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "88맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "89정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "90과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+     "91맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "92정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "93과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "94맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "95정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "96과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "97맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?", 
+     "98정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "99과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+     "100맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "101정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "102과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "103맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?"
+     "104정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "105과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "106맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",   
+     "107정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+     "108과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+     "109맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "110정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "111과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "112맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "113정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "114과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "115맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+
+    "116정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "117과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "118맛집에서 맛있게 밥을 먹었다. 바깥바람을 쐬고 나니 잠이 깨는 기분이었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+
+    "119정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "120과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+    "121맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",   
+    "122정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "123과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "124맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "125정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "126과실에서 배달을 해 먹었다. 그러나 아침을 많이 먹고 나온 용사는 점심까지 많이 먹고나서 배가 부른 나머지 나른함에 잠이 들었다.",
+    "127맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+
+    "128정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "129과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "130맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "131정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "132과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "133맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "134정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "135과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "136맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "137정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "138과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "139맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+
+    "140정문에 있는 맛집에 가게 되었다. 터벅터벅... 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다.",
+    "141과실에서 배달을 해 먹었다. 맛있었다. 체력낭비 없이 좀 쉬다가 수업에 갈 수 있었다. 오후 수업 시간이 되었다. 무슨 수업일까?",
+    "142맛집에서 맛있게 밥을 먹었다. 비가 와 갔다오느라 체력을 다 써버렸다. 용사는 그만 체력이 다 달아 기절하고 말았다."
+     ];
+
+    window.onload = function()
+    {
+         document.getElementById("story").innerHTML = Choix[0];
+    }
+
+
+    function myFunction()
+    {
+        var story2 = document.getElementById("story").innerHTML;
+        var story = story2.replace(/[^0-9]/g,'');
+        var button_1_checked = document.getElementById('Button1').checked;
+        var button_2_checked = document.getElementById('Button2').checked;
+        var button_3_checked = document.getElementById('Button3').checked;  
+        
+        if ( story == 0 )
+           {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[1];
+                document.getElementById('choice1').innerHTML = "맑음";
+                document.getElementById('choice2').innerHTML = "흐림";
+                document.getElementById('choice3').innerHTML = "비";
+                }
+                else if ( button_2_checked ) 
+                {
+                    f1.style.display = "block";
+
+                    document.getElementById("story").style.display = "none";
+                    document.getElementById("radio").style.display = "none";
+                    document.getElementById("bt").style.display = "none";
+                }
+                else if ( button_3_checked ) 
+                {
+                    f2.style.display = "block";
+                    document.getElementById("story").style.display = "none"; 
+                }
+           }
+        if ( story == 1 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[2];
+                document.getElementById('choice1').innerHTML = "먹는다1";
+                document.getElementById('choice2').innerHTML = "안먹는다1";
+                document.getElementById('choice3').innerHTML = "지각이다1";
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[3];
+                document.getElementById('choice1').innerHTML = "먹는다2";
+                document.getElementById('choice2').innerHTML = "안먹는다2";
+                document.getElementById('choice3').innerHTML = "지각이다2";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[4];
+                document.getElementById('choice1').innerHTML = "먹는다3";
+                document.getElementById('choice2').innerHTML = "안먹는다3";
+                document.getElementById('choice3').innerHTML = "지각이다3";
+                }
+            }
+        if ( story == 2 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[5];
+                document.getElementById('choice1').innerHTML = "A교수님1";
+                document.getElementById('choice2').innerHTML = "B교수님1";
+                document.getElementById('choice3').innerHTML = "C교수님1";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[6];
+                document.getElementById('choice1').innerHTML = "A교수님2";
+                document.getElementById('choice2').innerHTML = "B교수님2";
+                document.getElementById('choice3').innerHTML = "C교수님2";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[6];
+                document.getElementById('choice1').innerHTML = "A교수님3";
+                document.getElementById('choice2').innerHTML = "B교수님3";
+                document.getElementById('choice3').innerHTML = "C교수님3";
+                }
+            }
+        if ( story == 3 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[7];
+                document.getElementById('choice1').innerHTML = "A교수님4";
+                document.getElementById('choice2').innerHTML = "B교수님4";
+                document.getElementById('choice3').innerHTML = "C교수님4";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[8];
+                document.getElementById('choice1').innerHTML = "A교수님5";
+                document.getElementById('choice2').innerHTML = "B교수님5";
+                document.getElementById('choice3').innerHTML = "C교수님5";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[8];
+                document.getElementById('choice1').innerHTML = "A교수님6";
+                document.getElementById('choice2').innerHTML = "B교수님6";
+                document.getElementById('choice3').innerHTML = "C교수님6";
+                }
+            }
+        if ( story == 4 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[9];
+                document.getElementById('choice1').innerHTML = "A교수님7";
+                document.getElementById('choice2').innerHTML = "B교수님7";
+                document.getElementById('choice3').innerHTML = "C교수님7";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[10];
+                document.getElementById('choice1').innerHTML = "A교수님8";
+                document.getElementById('choice2').innerHTML = "B교수님8";
+                document.getElementById('choice3').innerHTML = "C교수님8";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[10];
+                document.getElementById('choice1').innerHTML = "A교수님9";
+                document.getElementById('choice2').innerHTML = "B교수님9";
+                document.getElementById('choice3').innerHTML = "C교수님9";
+                }
+            }
+
+
+        if ( story == 5 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[11];
+                document.getElementById('choice1').innerHTML = "간다1";
+                document.getElementById('choice2').innerHTML = "안간다1";
+                document.getElementById('choice3').innerHTML = "과실로 간다1";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[12];
+                document.getElementById('choice1').innerHTML = "간다2";
+                document.getElementById('choice2').innerHTML = "안간다2";
+                document.getElementById('choice3').innerHTML = "과실로 간다2";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[13];
+                }
+            }    
+        if ( story == 6 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[14];
+                document.getElementById('choice1').innerHTML = "간다3";
+                document.getElementById('choice2').innerHTML = "안간다3";
+                document.getElementById('choice3').innerHTML = "과실로 간다3";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[15];
+                document.getElementById('choice1').innerHTML = "간다4";
+                document.getElementById('choice2').innerHTML = "안간다4";
+                document.getElementById('choice3').innerHTML = "과실로 간다4";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[16];
+                }
+            }         
+        if ( story == 7 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[17];
+                document.getElementById('choice1').innerHTML = "간다5";
+                document.getElementById('choice2').innerHTML = "안간다5";
+                document.getElementById('choice3').innerHTML = "과실로 간다5";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[18];
+                document.getElementById('choice1').innerHTML = "간다6";
+                document.getElementById('choice2').innerHTML = "안간다6";
+                document.getElementById('choice3').innerHTML = "과실로 간다6";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[19];
+                }
+            } 
+        if ( story == 8 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[20];
+                document.getElementById('choice1').innerHTML = "간다7";
+                document.getElementById('choice2').innerHTML = "안간다7";
+                document.getElementById('choice3').innerHTML = "과실로 간다7";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[21];
+                document.getElementById('choice1').innerHTML = "간다8";
+                document.getElementById('choice2').innerHTML = "안간다8";
+                document.getElementById('choice3').innerHTML = "과실로 간다8";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[22];
+                }
+            }   
+        if ( story == 9 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[23];
+                document.getElementById('choice1').innerHTML = "간다9";
+                document.getElementById('choice2').innerHTML = "안간다9";
+                document.getElementById('choice3').innerHTML = "과실로 간다9";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[24];
+                document.getElementById('choice1').innerHTML = "간다10";
+                document.getElementById('choice2').innerHTML = "안간다10";
+                document.getElementById('choice3').innerHTML = "과실로 간다10";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[25];
+                }
+            }   
+        if ( story == 10 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[26];
+                document.getElementById('choice1').innerHTML = "간다11";
+                document.getElementById('choice2').innerHTML = "안간다11";
+                document.getElementById('choice3').innerHTML = "과실로 간다11";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[27];
+                document.getElementById('choice1').innerHTML = "간다12";
+                document.getElementById('choice2').innerHTML = "안간다12";
+                document.getElementById('choice3').innerHTML = "과실로 간다12";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[28];
+                }
+            }   
+
+         if ( story == 11 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[29];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다1";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다1";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다1";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[30];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다2";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다2";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다2";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[31];
+                }
+            }   
+         if ( story == 12 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[32];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다3";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다3";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다3";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[33];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다4";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다4";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다4";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[34];
+                }
+            }                                       
+         if ( story == 14 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[35];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다5";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다5";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다5";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[36];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[37];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다6";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다6";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다6";
+                }
+            }
+         if ( story == 15 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[38];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다7";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다7";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다7";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[39];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[40];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다8";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다8";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다8";                
+                }
+            }
+         if ( story == 17 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[41];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다9";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다9";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다9";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[42];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다10";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다10";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다10";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[43];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다11";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다11";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다11";
+                }
+            }
+         if ( story == 18 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[44];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다12";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다12";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다12";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[45];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다13";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다13";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다13";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[46];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다14";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다14";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다14";
+                }
+            }
+         if ( story == 20 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[47];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다15";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다15";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다15";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[48];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[49];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다16";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다16";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다16";                
+                }
+            }
+
+         if ( story == 21 )
+            {
+                if ( button_1_checked ) 
+                {
+
+                document.getElementById("story").innerHTML = Choix[50];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다17";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다17";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다17";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[51];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[52];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다18";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다18";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다18";                
+                }
+            }            
+         if ( story == 23 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[53];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다19";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다19";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다19";
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[54];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다20";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다20";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다20"; 
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[55];               
+                }
+            }  
+         if ( story == 24 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[56];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다21";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다21";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다21";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[57];
+                 document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다22";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다22";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다22";
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[58];
+                }
+            }  
+         if ( story == 26 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[59];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다23";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다23";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다23";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[60];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[61];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다24";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다24";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다24";                
+                }
+            }  
+         if ( story == 27 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[62];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다25";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다25";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다25";
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[63];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[64];
+                document.getElementById('choice1').innerHTML = "학교 정문에 있는 맛집을 간다26";
+                document.getElementById('choice2').innerHTML = "우리는 배달의 민족이지! 배달시켜먹는다26";
+                document.getElementById('choice3').innerHTML = "공학관에서 5분이내에 있는 맛집을 간다26";                
+                }
+            }  
+         if ( story == 29 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[65];
+                }
+                else if ( button_2_checked ) 
+                {
+                 document.getElementById("story").innerHTML = Choix[66];
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[67];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }         
+         if ( story == 30 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[68];
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[69];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                 
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[70];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }             
+         if ( story == 32 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[71];
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[72];                 
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[73];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }          
+         if ( story == 33 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[74];
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[75];   
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                              
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[76];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }         
+         if ( story == 35 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[77];
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[78];   
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                              
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[79];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }                              
+         if ( story == 37 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[80];
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[81];   
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                              
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[82];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }     
+         if ( story == 38 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[83];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[84];   
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                              
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[85];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }     
+         if ( story == 40 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[86]; 
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[87];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[88];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }    
+         if ( story == 41 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[89];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[90];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[91];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 42 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[92];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[93];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[94];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 43 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[95];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[96];                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[97];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 44 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[98];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[99];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[100];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 45 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[101];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[102];                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[103];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 46 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[104];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[105];                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[106];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 47 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[107];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[108];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[109];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 49 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[110];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[111];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[112];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }
+         if ( story == 50 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[113];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[114];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[115];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";               
+                }
+            }            
+         if ( story == 52 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[116];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[117];                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[118];               
+                }
+            }
+         if ( story == 53 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[119];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[120];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[121];               
+                }
+            }            
+         if ( story == 54 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[122];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[123];                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[124];               
+                }
+            }            
+         if ( story == 56 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[125];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[126];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[127];               
+                }
+            }            
+         if ( story == 57 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[128];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[129];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[130];               
+                }
+            }            
+         if ( story == 59 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[131];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[132];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[133];               
+                }
+            }            
+         if ( story == 61 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[134];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[135];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[136];               
+                }
+            }            
+         if ( story == 62 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[137];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[138];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[139];               
+                }
+            }
+         if ( story == 64 )
+            {
+                if ( button_1_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[140];                
+                }
+                else if ( button_2_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[141];
+                document.getElementById('choice1').innerHTML = "전공컨펌 수업1";
+                document.getElementById('choice2').innerHTML = "전공이론 수업1";
+                document.getElementById('choice3').innerHTML = "교양 수업1";                                        
+                }
+                else if ( button_3_checked ) 
+                {
+                document.getElementById("story").innerHTML = Choix[142];               
+                }
+            }
+
+
+        //a set of if statements for each Story / 'TEST'
+        //...
+        if ( button_1_checked == false && button_2_checked == false && button_3_checked == false)
+           {    
+               alert("선택후 누르세요!");
+               return;
+           }
+        document.getElementById('Button1').checked = false;
+        document.getElementById('Button2').checked = false;
+        document.getElementById('Button3').checked = false;
+    }
+</script>
+
+</body>
+</html>
